@@ -40,7 +40,18 @@ Best Architecture while using SpringBoot for backend
 
 website to create flow chart -> app.diagrams.net 
 
+TO INSTALL LAMBOK
 
+Go to google and search "lombok jar download" --> https://projectlombok.org/download 
+Move Downloaded Jar File To STS Installed Folder and Past It 
+
+1st way -> double click on jar file to run -> one dialogue box will open 
+
+2nd way --> click on address bar of file explorer (Top where the path is displayed) and type CMD
+		--> type java -jar lombok.jar
+		--> It Will open one window --> Click on specify location button and select the springtoolsuite4.exe file  
+		--> click on Install/Update button then click on Quite Installer
+		--> Now Restart STS
 
 
 
