@@ -1,0 +1,41 @@
+# What we are going to build: Client Requirements --> 
+
+Client Wants Blogging application where he/she can write blogs and articles.
+
+1> User Should Create/Update/Delete and List posts
+2> User Should Add,Update,Delete comments on post
+3> Categories the posts according to categories 
+4> New user should able to Register on our application
+5> User shold able to login to our application
+6> Post includes one picture too
+
+
+# What we are going to build: Technical Terms --> 
+
+1> Proper Login and Register API. (for post and comment)
+2> Posts API includes Pagination and Sorting
+3> Proper User input validation handling
+4> Proper Exception Handling
+5> Role based authentiation Role Based Secirity with apis
+6> JWT Based Authentication (JSON WEB TOKEN)
+7> Document all rest apis so that consumer can easily understand
+8> Deploy the backend application on any cloud platform (AWS, Google cloud, Dilital Ocean)
+
+# What are the technologies and tools we are going to use?
+
+1> Framework: Spring Boot Java Framework
+2> Java 8+
+3> Maven (Project Build Tool)
+4> STS (IDE)
+5> Apache Tomcat (local server emmbeded in spring boot)
+6> Spring Core, Spring Security(JWT), Spring data JPA (Hibernate) etc 
+7> MySQL Database
+8> Postman Rest Client (Testing to apis)
+9> Swagger (Api documentation)
+10> AWS EC2 (EC2 instance)
+  
+Best Architecture while using SpringBoot for backend
+* Layered Architecture
+
+
+website to create flow chart -> app.diagrams.net 
