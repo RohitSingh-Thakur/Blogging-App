@@ -6,17 +6,18 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.singh.rdst.dao.UserRepo;
+
 import com.singh.rdst.entity.User;
 import com.singh.rdst.exceptions.ResourceNotFoundException;
 import com.singh.rdst.payloads.UserDto;
+import com.singh.rdst.repository.UserRepo;
 import com.singh.rdst.services.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
-	private UserRepo repo;
+	private UserRepo userRepo;
 	
 	@Autowired
 	private ModelMapper mapper;
@@ -24,41 +25,41 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		User user = this.mapper.map(userDto, User.class);
-		User savedUser = this.repo.save(user);
+		User savedUser = this.userRepo.save(user);
 		return this.mapper.map(savedUser, UserDto.class);
 	}
 
 	@Override
 	public UserDto updateUser(UserDto userDto, Integer userId) {
-		User user = this.repo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User","UserID",userId));
+		User user = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User","UserID",userId));
 		
 		user.setUser_Name(userDto.getUser_Name());
 		user.setUser_Email(userDto.getUser_Email());
 		user.setPassword(userDto.getPassword());
 		user.setAbout(userDto.getAbout());
 
-		User upadtedUser = this.repo.save(user);
+		User upadtedUser = this.userRepo.save(user);
 		
 		return this.mapper.map(upadtedUser, UserDto.class);
 	}
 
 	@Override
 	public UserDto getUserById(Integer userId) {
-		Optional<User> user = Optional.ofNullable(this.repo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId)));
+		Optional<User> user = Optional.ofNullable(this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId)));
 		return this.mapper.map(user, UserDto.class);
 	}
 
 	@Override
 	public List<UserDto> getAllUsers() {
-		List<User> users = this.repo.findAll();
+		List<User> users = this.userRepo.findAll();
 		 List<UserDto> usersDto = users.stream().map(e -> this.mapper.map(e, UserDto.class)).collect(Collectors.toList());
 		 return usersDto;
 	}
 
 	@Override
 	public void deleteUser(Integer userId) {
-		User user = this.repo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("USER", "ID", userId));
-		this.repo.delete(user);
+		User user = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("USER", "ID", userId));
+		this.userRepo.delete(user);
 	}
 
 }

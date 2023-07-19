@@ -1,4 +1,4 @@
-package com.singh.rdst.dao;
+package com.singh.rdst.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
