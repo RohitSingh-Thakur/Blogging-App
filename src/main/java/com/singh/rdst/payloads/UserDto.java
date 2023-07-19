@@ -12,19 +12,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDto {
 	
-	private Integer user_Id;
+	private Integer userId;
 	
 	@NotBlank(message = "User Name Should Not Be Empty..")
 	@Size(min = 2, max = 100, message = "Name Should Be Between 2 To 100 Charachters")
 	@Pattern(regexp = "^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$", message = "User Name Should Not Contains Digits & Spaces DoesNot Allowed At Start And End Of the Word")
 	// This REGEX Will Accept Only Characters Not Digits And Also Does Not Allow space at starting and ending
 	// only accept only single space between 2 words
-	private String user_Name;
+	private String userName;
 	
 	@NotBlank(message = "Email Id Should Not Be Empty..")
 	@Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$", 
 				message = "Please Enter Valid Email ID")
-	private String user_Email;
+	private String userEmail;
 	
 	@NotBlank(message = "Password Should Not Be Empty..")
 	private String password;
