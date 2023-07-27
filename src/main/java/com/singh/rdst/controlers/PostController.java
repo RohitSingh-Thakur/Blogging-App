@@ -1,12 +1,18 @@
 package com.singh.rdst.controlers;
 
-import java.io.IOException;
-import java.util.List; 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import org.hibernate.engine.jdbc.StreamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -125,9 +131,9 @@ public class PostController {
 	// Image Upload Code PostImageUpload
 	@PostMapping("/uploadPostImage/{postId}")
 	public ResponseEntity<PostDto> uploadPostImage(
-			@RequestParam("myImage") MultipartFile file,
-			@PathVariable Integer postId
-			) throws IOException{
+				@RequestParam("myImage") MultipartFile file,
+					@PathVariable Integer postId) throws IOException{
+		
 		PostDto postDto = this.postService.getPostByPostId(postId);
 		String fileName = this.fileService.uploadImage(path, file);
 		postDto.setImageName(fileName);
@@ -135,4 +141,13 @@ public class PostController {
 		return new ResponseEntity<PostDto>(updatePost, HttpStatus.OK);
 		}
 	
+	@GetMapping(value = "/getPostImage/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
+	public void downlaodImage(
+			@PathVariable("imageName") String imageName,
+			HttpServletResponse response
+			)throws IOException{
+		InputStream resource = this.fileService.getResource(path, imageName);
+		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+		StreamUtils.copy(resource, response.getOutputStream());
+	}
 }

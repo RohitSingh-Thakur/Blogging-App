@@ -39,7 +39,7 @@ public class FileServiceImpl implements FileService {
 		
 		// File Copy 
 		Files.copy(file.getInputStream(), Paths.get(filePath));
-		return name;
+		return fileName1;
 	}
 
 	@Override
