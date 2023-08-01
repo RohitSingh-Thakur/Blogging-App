@@ -1,8 +1,14 @@
 package com.singh.rdst.payloads;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.NotBlank;  
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.singh.rdst.entity.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,4 +38,6 @@ public class UserDto {
 	@NotBlank(message = "About Should Not Be Empty..")
 	@Size(min = 2, max = 100, message = "About Should Be Between 2 To 100 Charachters")
 	private String about;
+	
+	private Set<RoleDto> role = new HashSet<>();
 }

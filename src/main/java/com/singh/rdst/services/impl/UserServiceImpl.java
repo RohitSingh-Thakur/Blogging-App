@@ -5,11 +5,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.singh.rdst.entity.Role;
 import com.singh.rdst.entity.User;
 import com.singh.rdst.exceptions.ResourceNotFoundException;
 import com.singh.rdst.payloads.UserDto;
+import com.singh.rdst.repository.RoleRepo;
 import com.singh.rdst.repository.UserRepo;
 import com.singh.rdst.services.UserService;
 
@@ -21,6 +24,12 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoleRepo roleRepo;
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
@@ -60,6 +69,22 @@ public class UserServiceImpl implements UserService{
 	public void deleteUser(Integer userId) {
 		User user = this.userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("USER", "ID", userId));
 		this.userRepo.delete(user);
+	}
+
+	@Override
+	public UserDto registerNewUser(UserDto userDto) {
+		User user = this.mapper.map(userDto, User.class);
+		// Before saving the user we need to encrypt the password using PasswordEncoder Interface which needs to be Autowired
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		// and we need to specify its role also
+		// here for each new user we are assigning normal user to it that is role id 802 -> ROLE_USER
+		
+		Role userRole = this.roleRepo.findById(802).get();
+		user.getRole().add(userRole);
+		
+		// Saving the user into Database
+		User savedUser = this.userRepo.save(user);
+		return this.mapper.map(savedUser, UserDto.class);
 	}
 
 }
